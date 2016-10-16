@@ -1,0 +1,1135 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+3 РОЗРОБКА ПРОГРАМИ
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename C:/Users/user/Desktop/Untitled Diagram1.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Рисунок 3.1 – Діаграма класів
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+public class Board
+\series default
+ - створений для реалізації задачі у вигляді масиву із розмірністю N.
+ Взначає функції Хемінга(Hamming) та Манхетена(Manhattan).
+ Перевіряє невирішувану ситуацію, обмінюючи дві сусідні клітинки в рядку.
+ Робить перевірку клітинок, що є сусідами до пустої клітинки.
+ 
+\end_layout
+
+\begin_layout Standard
+Представлені такі методи:
+\end_layout
+
+\begin_layout Standard
+• Функція Хемінга(Hamming) – визначає кількість блоків, які не стоять на
+ своїх місцях: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Public int hamming() {   
+\end_layout
+
+\begin_layout Plain Layout
+
+     int cnt = 0;         
+\end_layout
+
+\begin_layout Plain Layout
+
+for (int i = 0; i < blocks.length; i++)    
+\end_layout
+
+\begin_layout Plain Layout
+
+  if (blocks[i] != 0 && blocks[i] != i+1)      
+\end_layout
+
+\begin_layout Plain Layout
+
+  cnt++;        
+\end_layout
+
+\begin_layout Plain Layout
+
+return cnt;     } 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+• Функція Манхетена(Manhattan) – сумує відстані між поточним блоком і місцем,
+ де він повинен розміщуватися:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+public int manhattan() {     
+\end_layout
+
+\begin_layout Plain Layout
+
+   int sum;         
+\end_layout
+
+\begin_layout Plain Layout
+
+int row, col;
+\end_layout
+
+\begin_layout Plain Layout
+
+        sum = 0;         
+\end_layout
+
+\begin_layout Plain Layout
+
+for (int i = 0; i < blocks.length; i++) {             
+\end_layout
+
+\begin_layout Plain Layout
+
+if (blocks[i] != 0 && blocks[i] != i+1) {                 
+\end_layout
+
+\begin_layout Plain Layout
+
+col = Math.abs(i % N - (blocks[i]-1) % N);                 
+\end_layout
+
+\begin_layout Plain Layout
+
+row = Math.abs(i / N - (blocks[i]-1) / N);                 
+\end_layout
+
+\begin_layout Plain Layout
+
+sum += (row + col);             }         }         
+\end_layout
+
+\begin_layout Plain Layout
+
+return sum;    
+\end_layout
+
+\begin_layout Plain Layout
+
+} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+• Метод public boolean isGoal() робить перевірку поточної дошки, на те,
+ чи є вона кінцевою дошкою:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+public boolean isGoal() {         
+\end_layout
+
+\begin_layout Plain Layout
+
+for (int i = 0; i < blocks.length; i++)             
+\end_layout
+
+\begin_layout Plain Layout
+
+if (blocks[i] != 0 && blocks[i] != i+1)                 
+\end_layout
+
+\begin_layout Plain Layout
+
+return false;         
+\end_layout
+
+\begin_layout Plain Layout
+
+return true;     } 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+• Метод Public Board twin() визначає дошку, отриману шляхом обміну двох
+ сусідніх блоків у тому ж рядку:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+public Board twin() {         
+\end_layout
+
+\begin_layout Plain Layout
+
+Board tBoard;         
+\end_layout
+
+\begin_layout Plain Layout
+
+if (N <= 1)    
+\end_layout
+
+\begin_layout Plain Layout
+
+return null;
+\end_layout
+
+\begin_layout Plain Layout
+
+     
+\end_layout
+
+\begin_layout Plain Layout
+
+  tBoard = new Board(blocks);       
+\end_layout
+
+\begin_layout Plain Layout
+
+ if (blocks[0] != 0 && blocks[1] != 0)          
+\end_layout
+
+\begin_layout Plain Layout
+
+  exch(tBoard.blocks, 0, 1);        
+\end_layout
+
+\begin_layout Plain Layout
+
+else            
+\end_layout
+
+\begin_layout Plain Layout
+
+exch(tBoard.blocks, N, N+1);       
+\end_layout
+
+\begin_layout Plain Layout
+
+ return tBoard;    
+\end_layout
+
+\begin_layout Plain Layout
+
+} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+• Метод public boolean equals(Object y) визначає чи рівна поточна дошка
+ до об’єкта у:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+public boolean equals(Object y) {        
+\end_layout
+
+\begin_layout Plain Layout
+
+if (y == null) return false;         
+\end_layout
+
+\begin_layout Plain Layout
+
+if (y == this) return true;         
+\end_layout
+
+\begin_layout Plain Layout
+
+if (y.getClass() != this.getClass())             
+\end_layout
+
+\begin_layout Plain Layout
+
+return false;
+\end_layout
+
+\begin_layout Plain Layout
+
+       Board yBoard = (Board) y;        
+\end_layout
+
+\begin_layout Plain Layout
+
+return Arrays.equals(blocks, yBoard.blocks);    
+\end_layout
+
+\begin_layout Plain Layout
+
+}         
+\end_layout
+
+\begin_layout Plain Layout
+
+private void exch(int[] a, int i, int j) {       
+\end_layout
+
+\begin_layout Plain Layout
+
+ int temp = a[j];       
+\end_layout
+
+\begin_layout Plain Layout
+
+ a[j] = a[i];        
+\end_layout
+
+\begin_layout Plain Layout
+
+a[i] = temp;    
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+• Метод boolean equals(Object y) визначає усі дошки, які є сусідами даної.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+public Iterable<Board> neighbors() {        
+\end_layout
+
+\begin_layout Plain Layout
+
+int i;        
+\end_layout
+
+\begin_layout Plain Layout
+
+Board neiBoard;      
+\end_layout
+
+\begin_layout Plain Layout
+
+  Queue<Board> bq = new Queue<Board>();
+\end_layout
+
+\begin_layout Plain Layout
+
+        for (i = 0; i < blocks.length; i++)        
+\end_layout
+
+\begin_layout Plain Layout
+
+    if (blocks[i] == 0) break;
+\end_layout
+
+\begin_layout Plain Layout
+
+        if (i >= blocks.length) return null;   
+\end_layout
+
+\begin_layout Plain Layout
+
+              if (i >= N)    {     
+\end_layout
+
+\begin_layout Plain Layout
+
+       neiBoard = new Board(blocks);        
+\end_layout
+
+\begin_layout Plain Layout
+
+    exch(neiBoard.blocks, i, i-N);   
+\end_layout
+
+\begin_layout Plain Layout
+
+         bq.enqueue(neiBoard); 
+\end_layout
+
+\begin_layout Plain Layout
+
+        }       
+\end_layout
+
+\begin_layout Plain Layout
+
+ if (i < blocks.length - N) {         
+\end_layout
+
+\begin_layout Plain Layout
+
+   neiBoard = new Board(blocks);       
+\end_layout
+
+\begin_layout Plain Layout
+
+     exch(neiBoard.blocks, i, i+N);      
+\end_layout
+
+\begin_layout Plain Layout
+
+      bq.enqueue(neiBoard);      
+\end_layout
+
+\begin_layout Plain Layout
+
+  }         
+\end_layout
+
+\begin_layout Plain Layout
+
+if (i % N != 0) {   
+\end_layout
+
+\begin_layout Plain Layout
+
+         neiBoard = new Board(blocks);        
+\end_layout
+
+\begin_layout Plain Layout
+
+    exch(neiBoard.blocks, i, i-1);           
+\end_layout
+
+\begin_layout Plain Layout
+
+ bq.enqueue(neiBoard);         }  
+\end_layout
+
+\begin_layout Plain Layout
+
+      if ((i+1) % N != 0) {        
+\end_layout
+
+\begin_layout Plain Layout
+
+    neiBoard = new Board(blocks);    
+\end_layout
+
+\begin_layout Plain Layout
+
+        exch(neiBoard.blocks, i, i+1);     
+\end_layout
+
+\begin_layout Plain Layout
+
+       bq.enqueue(neiBoard);         }     
+\end_layout
+
+\begin_layout Plain Layout
+
+   return bq;    
+\end_layout
+
+\begin_layout Plain Layout
+
+} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Метод String toString() відповідає за представлення дошки у вигляді стрічок.
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+public String toString() {  
+\end_layout
+
+\begin_layout Plain Layout
+
+      StringBuilder s = new StringBuilder();     
+\end_layout
+
+\begin_layout Plain Layout
+
+   int digit = 0;        
+\end_layout
+
+\begin_layout Plain Layout
+
+String format;           
+\end_layout
+
+\begin_layout Plain Layout
+
+      s.append(N);    
+\end_layout
+
+\begin_layout Plain Layout
+
+    s.append("
+\backslash
+n");
+\end_layout
+
+\begin_layout Plain Layout
+
+        for (int n = blocks.length; n != 0; n /= 10)      
+\end_layout
+
+\begin_layout Plain Layout
+
+      digit++;         
+\end_layout
+
+\begin_layout Plain Layout
+
+     format = "%" + digit + "d ";      
+\end_layout
+
+\begin_layout Plain Layout
+
+  for (int i = 0; i < blocks.length; i++) {    
+\end_layout
+
+\begin_layout Plain Layout
+
+        s.append(String.format(format, blocks[i]));      
+\end_layout
+
+\begin_layout Plain Layout
+
+      if ((i+1) % N == 0)      
+\end_layout
+
+\begin_layout Plain Layout
+
+          s.append("
+\backslash
+n");      
+\end_layout
+
+\begin_layout Plain Layout
+
+  }      
+\end_layout
+
+\begin_layout Plain Layout
+
+  return s.toString();     
+\end_layout
+
+\begin_layout Plain Layout
+
+} 
+\end_layout
+
+\end_inset
+
+
+\series bold
+public class Solver 
+\series default
+– створений для пошуку розв’язку початкової дошки (використовуючи алгоритм
+ А*).
+ Видаляє попередньо досягнутий вузол, поки не досягнута кінцева дошка.
+ Робить перевірку на те, чи можна розв’язати початкову дошку.
+ Визначає послідовність дошок при найменшій кількості зроблених кроків.
+ Цей клас також зчитує вхідні дані, і розв’язує саму задачу.
+ За допомогою Solver ми знаходимо рішення вихідної дошки , використовуючи
+ алгоритм A*.
+ 
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+public Solver(Board initial) {          
+\end_layout
+
+\begin_layout Plain Layout
+
+PriorityOrder po = new PriorityOrder();  
+\end_layout
+
+\begin_layout Plain Layout
+
+      MinPQ<SearchNode> pq = new MinPQ<SearchNode>(po);       
+\end_layout
+
+\begin_layout Plain Layout
+
+ SearchNode sn = new SearchNode(initial);                
+\end_layout
+
+\begin_layout Plain Layout
+
+       PriorityOrder twinPo = new PriorityOrder();        
+\end_layout
+
+\begin_layout Plain Layout
+
+MinPQ<SearchNode> twinPq = new MinPQ<SearchNode>(twinPo);  
+\end_layout
+
+\begin_layout Plain Layout
+
+      SearchNode twinSn = new SearchNode(initial.twin());       
+\end_layout
+
+\begin_layout Plain Layout
+
+ pq.insert(sn);      
+\end_layout
+
+\begin_layout Plain Layout
+
+  twinPq.insert(twinSn);                       
+\end_layout
+
+\begin_layout Plain Layout
+
+   SearchNode minNode = pq.delMin();        
+\end_layout
+
+\begin_layout Plain Layout
+
+SearchNode twinMinNode = twinPq.delMin();  
+\end_layout
+
+\begin_layout Plain Layout
+
+      while (!minNode.board.isGoal() && !twinMinNode.board.isGoal()) {     
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+     for (Board b : minNode.board.neighbors()) {       
+\end_layout
+
+\begin_layout Plain Layout
+
+         if ((minNode.preNode == null)          
+\end_layout
+
+\begin_layout Plain Layout
+
+              || !b.equals(minNode.preNode.board)) {      
+\end_layout
+
+\begin_layout Plain Layout
+
+              SearchNode node = new SearchNode(b);      
+\end_layout
+
+\begin_layout Plain Layout
+
+              node.moves = minNode.moves + 1;                   
+\end_layout
+
+\begin_layout Plain Layout
+
+ node.preNode = minNode;         
+\end_layout
+
+\begin_layout Plain Layout
+
+           pq.insert(node);            
+\end_layout
+
+\begin_layout Plain Layout
+
+    }     
+\end_layout
+
+\begin_layout Plain Layout
+
+       }          
+\end_layout
+
+\begin_layout Plain Layout
+
+  for (Board b : twinMinNode.board.neighbors()) {   
+\end_layout
+
+\begin_layout Plain Layout
+
+      if ((minNode.preNode == null)|| !b.equals(twinMinNode.preNode.board))
+ {           
+\end_layout
+
+\begin_layout Plain Layout
+
+         SearchNode node = new SearchNode(b);      
+\end_layout
+
+\begin_layout Plain Layout
+
+              node.moves = twinMinNode.moves + 1;       
+\end_layout
+
+\begin_layout Plain Layout
+
+             node.preNode = twinMinNode;     
+\end_layout
+
+\begin_layout Plain Layout
+
+               twinPq.insert(node);                 
+\end_layout
+
+\begin_layout Plain Layout
+
+}            
+\end_layout
+
+\begin_layout Plain Layout
+
+}             minNode = pq.delMin();        
+\end_layout
+
+\begin_layout Plain Layout
+
+    twinMinNode = twinPq.delMin();        
+\end_layout
+
+\begin_layout Plain Layout
+
+}                  if (minNode.board.isGoal())      
+\end_layout
+
+\begin_layout Plain Layout
+
+      goal = minNode;   
+\end_layout
+
+\begin_layout Plain Layout
+
+     else       
+\end_layout
+
+\begin_layout Plain Layout
+
+     goal = null;     } 
+\end_layout
+
+\end_inset
+
+Для алгоритму пошуку A* ми використовуємо пріоритетну чергу.
+ Порядок вибірки елементів з таких черг визначається пріоритетами елементів.
+ Пріоритет у загальному випадку може бути представлений значенням, що обчислюєть
+ся, або на основі значень поля будь-якого елемента, або на основі зовнішніх
+ факторів.
+ Так, FІFO, і LІFO - черги трактуються як пріоритетні черги, у яких пріоритетом
+ є час включення елемента в чергу.
+ Над пріоритетною чергою визначені наступні операції:
+\end_layout
+
+\begin_layout Itemize
+включення елемента в кінець черги;
+\end_layout
+
+\begin_layout Itemize
+включення елемента в чергу по пріоритету; 
+\end_layout
+
+\begin_layout Itemize
+виключення елемента з черги по пріоритету;
+\end_layout
+
+\begin_layout Itemize
+виключення елемента з початку черги;
+\end_layout
+
+\begin_layout Itemize
+визначення розміру черги; 
+\end_layout
+
+\begin_layout Itemize
+очищення черги.
+ 
+\end_layout
+
+\begin_layout Standard
+При роботі з пріоритетними чергами частіше говорять не про елементи, а про
+ запити, що записують у чергу.
+ При цьому можлива організація черг із пріоритетним включенням елемента
+ в чергу і з пріоритетним виключенням запиту з черги.
+ Для черги з пріоритетним включенням послідовність запитів у черзі увесь
+ час підтримується упорядкованою, тобто кожен новий елемент включається
+ на те місце в послідовності, що визначається його пріоритетом.
+ 
+\series bold
+Алгоритм пріоритетного включення
+\series default
+ передбачає так дії:
+\end_layout
+
+\begin_layout Standard
+– якщо черга неповна, знайти згідно з пріоритетом таке місце в черзі, де
+ треба поставити запит;
+\end_layout
+
+\begin_layout Standard
+– звільнити місце для запита, для чого зсунути всі елементи від цього місця
+ до кінця черги на один елемент; 
+\end_layout
+
+\begin_layout Standard
+– внести запит до черги.
+ При виключенні завжди вибирається запит із початку черги.
+ Зрозуміло, що при такому алгоритмі читання черга буде “переміщатися” в
+ напрямку до кінця пам’яті, що виділена для черги, лишаючи вільне місце
+ на її початку.
+ Тому треба або переміщувати елементи черги на початок пам’яті, або використовув
+ати кільцевий масив.
+ Для черги з пріоритетним виключенням новий елемент включається завжди в
+ кінець черги, а при виключенні з черги відшукується потрібний запит.
+ Алгоритм пріоритетного виключення запиту такий: – якщо черга непорожня,
+ знайти за пріоритетом потрібний запит (цей пошук може бути тільки лінійним);
+\end_layout
+
+\begin_layout Standard
+– прочитати запит;
+\end_layout
+
+\begin_layout Standard
+–видалити запит з черги, для чого зрушити всі елементи черги від наступного
+ до кінцевого на одну позицію ліворуч.
+ 
+\end_layout
+
+\begin_layout Standard
+Як видно, і в одному, і в другому варіанті організації пріоритетної черги
+ потрібен пошук і переміщення елементів.
+ Як наслідок, у першому випадку час на постановку запиту в чергу більший
+ ніж час читання і навпаки у другому.
+ Тому, який алгоритм обрати, вирішується в кожному випадку окремо.
+ Однак зауважимо, при виборі елемента з пріоритетної черги кожного разу
+ вибирається елемент із найбільшим (найменшим) пріоритетом.
+ Також ми маємо метод moves().
+ Даний метод визначеє кількість ходів для вирішення проблеми(тобто для розміщенн
+я всіх елементів на своєму місці).
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+public int moves() {   
+\end_layout
+
+\begin_layout Plain Layout
+
+     if (goal == null) return -1;    
+\end_layout
+
+\begin_layout Plain Layout
+
+    return goal.moves;  
+\end_layout
+
+\begin_layout Plain Layout
+
+  } 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Наступний метод у нашій програмі Iterable<Board> solution() .Він визначає
+ послідовність пазлів у найкоротшому вирішенні.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+public Iterable<Board> solution() {   
+\end_layout
+
+\begin_layout Plain Layout
+
+     if (!isSolvable())  return null;  
+\end_layout
+
+\begin_layout Plain Layout
+
+      Stack<Board> bStack = new Stack<Board>();    
+\end_layout
+
+\begin_layout Plain Layout
+
+    for (SearchNode s = goal; s != null; s = s.preNode)    
+\end_layout
+
+\begin_layout Plain Layout
+
+        bStack.push(s.board);    
+\end_layout
+
+\begin_layout Plain Layout
+
+             return bStack;    
+\end_layout
+
+\begin_layout Plain Layout
+
+} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Метод main() виводить дані на екран.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+public static void main(String[] args) {   
+\end_layout
+
+\begin_layout Plain Layout
+
+   In in = new In(args[0]);       
+\end_layout
+
+\begin_layout Plain Layout
+
+ int N = in.readInt();       
+\end_layout
+
+\begin_layout Plain Layout
+
+ int[][] blocks = new int[N][N]; 
+\end_layout
+
+\begin_layout Plain Layout
+
+       for (int i = 0; i < N; i++)    
+\end_layout
+
+\begin_layout Plain Layout
+
+        for (int j = 0; j < N; j++)                
+\end_layout
+
+\begin_layout Plain Layout
+
+blocks[i][j] = in.readInt();          
+\end_layout
+
+\begin_layout Plain Layout
+
+Board initial = new Board(blocks); 
+\end_layout
+
+\begin_layout Plain Layout
+
+Solver solver = new Solver(initial);
+\end_layout
+
+\begin_layout Plain Layout
+
+  if (!solver.isSolvable())      
+\end_layout
+
+\begin_layout Plain Layout
+
+      StdOut.println("No solution possible");       
+\end_layout
+
+\begin_layout Plain Layout
+
+ else {            
+\end_layout
+
+\begin_layout Plain Layout
+
+StdOut.println("Minimum number of moves = " + solver.moves());    
+\end_layout
+
+\begin_layout Plain Layout
+
+        for (Board board : solver.solution())               
+\end_layout
+
+\begin_layout Plain Layout
+
+ StdOut.println(board);         
+\end_layout
+
+\begin_layout Plain Layout
+
+}     
+\end_layout
+
+\begin_layout Plain Layout
+
+} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Також у даному методі ми використовуємо MinPQ.
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,319 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+2 ОБГРУНТУВАННЯ АЛГОРИТМУ І СТРУКТУРИ ПРОГРАМИ
+\end_layout
+
+\begin_layout Standard
+Клас — це спеціальна конструкція, яка використовується для групування пов'язаних
+ змінних та функцій.
+ 
+\end_layout
+
+\begin_layout Standard
+Класи та функції які знаходяться в програмі розбиті на модулі.
+ Модуль — функціонально завершений фрагмент програми, оформлений у вигляді
+ окремого файлу, призначений для використання в інших програмах.
+ Модулі дозволяють розбивати складні задачі на менші відповідно до принципу
+ модульності.
+ 
+\end_layout
+
+\begin_layout Standard
+У програмі створено два класів.
+ Клас Board та Solver.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+public class Board
+\series default
+- створений для реалізації задачі у вигляді масиву із розмірністю N.
+ Взначає функції Хемінга(Hamming) та Манхетена(Manhattan).
+ Перевіряє невирішувану ситуацію, обмінюючи дві сусідні клітинки в рядку.
+ Робить перевірку клітинок, що є сусідами до пустої клітинки.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+public class Solver
+\series default
+ – створений для пошуку розв’язку початкової дошки (використовуючи алгоритм
+ А*).
+ Видаляє попередньо досягнутий вузол, поки не досягнута кінцева дошка.
+ Робить перевірку на те, чи можна розв’язати початкову дошку.
+ Визначає послідовність дошок при найменшій кількості зроблених кроків.
+ Цей клас також зчитує вхідні дані, і розв’язує саму задачу.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Алгоритм пошуку А*
+\series default
+ 
+\end_layout
+
+\begin_layout Standard
+У своїй програмі ми використовуємо даний алгоритм для пошуку найкоротшого
+ шляху.
+ Даний алгоритм зручно розглядати на прикладі графів.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename images/2.1.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Рисунок 2.1 – Алгоритм пошуку А*
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Алгоритм пошуку А*
+\series default
+ належить до алгоритмів пошуку.
+ У своїй програмі ми використовуємо даний алгоритм для пошуку найкоротшого
+ шляху.
+ Даний алгоритм зручно розглядати на прикладі графів.
+\end_layout
+
+\begin_layout Standard
+Алгоритм повний в тому сенсі, що завжди знаходить оптимальний розв'язок,
+ якщо він існує.
+\end_layout
+
+\begin_layout Standard
+Алгоритм ділить вершини на невідомі вершини( ці вершини ще не були знайдені),
+ відомі вершини (вже відомий шлях до цих вершин), повністю досліджені вершини
+ (до цих вершин вже відомий найкоротший шлях).
+\end_layout
+
+\begin_layout Standard
+Кожна відома або повністю досліджена вершина має вказівник на попередні
+ вершини.
+ Завдяки цьому вказівникові, можна пройти шляхом від цієї до початкової
+ вершини.
+\end_layout
+
+\begin_layout Standard
+Коли вершину буде повністю досліджено суміжні з нею вершини додаються до
+ списку відомих вершин, а сама вершина додається в список повністю досліджених.
+ 
+\end_layout
+
+\begin_layout Standard
+Алгоритм зупиняється коли кінцева вершина потрапляє до списку повністю досліджен
+их вершин.
+ Знайдений шлях відтворюється із допомогою вказівників на попередню вершину.
+ Якщо список відомих вершин порожніє, то розв'язку задачі не існує і алгоритм
+ припиняє пошук.
+\end_layout
+
+\begin_layout Standard
+Відтворений за зворотніми вказівниками знайдений шлях починається з кінцевої
+ вершини та прямує до початкової.
+ Аби одразу отримати шлях в правильному напрямі, з початкової вершини до
+ кінцевої, в умовах задачі слід переставити місцями початок та кінець.
+ Якщо шукати шлях починаючи з кінцевої вершини, відтворений список починатиметьс
+я з початкової вершини й прямуватиме до кінцевої.
+\end_layout
+
+\begin_layout Standard
+Також у нашій програмі використовувались 
+\series bold
+черги з пріоритетом.
+
+\series default
+ Черга увесь час підтримується упорядкованою, тобто кожен новий елемент
+ включається на те місце в послідовності, що визначається його пріоритетом.
+\end_layout
+
+\begin_layout Standard
+Алгоритм пріоритетного включення передбачає так дії:
+\end_layout
+
+\begin_layout Standard
+– якщо черга неповна, знайти згідно з пріоритетом таке місце в черзі, де
+ треба поставити запит; 
+\end_layout
+
+\begin_layout Standard
+– звільнити місце для запита, для чого зсунути всі елементи від цього місця
+ до кінця черги на один елемент; 
+\end_layout
+
+\begin_layout Standard
+– внести запит до черги.
+ 
+\end_layout
+
+\begin_layout Standard
+Для організації пріоритетної черги потрібен пошук і переміщення елементів.
+ Однак важливо, при виборі елемента з пріоритетної черги кожного разу вибираєтьс
+я елемент із найбільшим (найменшим) пріоритетом.
+\end_layout
+
+\begin_layout Standard
+Також до програми підключається текстовий файл даних puzzle1.txt для відповідної
+ подальшої обробки цих результатів програмою.
+\end_layout
+
+\begin_layout Standard
+Програма реалізує вікно, в якому можна побачити результати.
+ 
+\end_layout
+
+\begin_layout Standard
+Також користувач може самостійно грати гру.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename images/2.2.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Рисунок 2.2 – інтерфейс програми
+\end_layout
+
+\begin_layout Standard
+Сучасні програми потребують графічному інтерфейсі користувача (GUI) .
+ Користувачі відвикли працювати через консоль : вони керують програмою і
+ вводять вхідні дані за допомогою так званих елементів управління ( в програмува
+нні їх також називають візуальними компонентами ) , до яких відносяться
+ кнопки, текстові поля, списки, що випадають і т.д.
+\end_layout
+
+\begin_layout Standard
+Кожен із сучасних мов програмування надає безліч бібліотек для роботи зі
+ стандартним набором елементів управління.
+ Нагадаємо, що під бібліотекою в програмуванні набір готових класів та інтерфейс
+ів, призначених для вирішення певного кола завдань.
+\end_layout
+
+\begin_layout Standard
+У Java є три бібліотеки візуальних компонентів для створення графічного
+ інтерфейсу користувача.
+ Найбільш рання з них називається AWT.
+ Вважається, що при її проектуванні було допущено ряд недоліків, внаслідок
+ яких з нею досить складно працювати.
+ Бібліотека Swing розроблена на базі AWT і замінює більшість її компонентів
+ своїми, спроектованими більш ретельно і зручно.
+ Третя, найбільша нова бібліотека, називається SWT.
+\end_layout
+
+\begin_layout Standard
+Кожна бібліотека надає набір класів для роботи з кнопками , списками , вікнами
+ , меню і т.д., але ці класи спроектовані по- різному: вони мають різний набір
+ методів з різними параметрами , тому « перевести » програму з однієї бібліотеки
+ в іншу ( наприклад , з метою збільшення швидкодії ) не так -то просто.
+\end_layout
+
+\begin_layout Standard
+Отже, наша програма складається із двох класів 
+\series bold
+Board
+\series default
+ та 
+\series bold
+Solver
+\series default
+, також до програми підключається текстовий файл даних puzzle1.txt для відповідно
+ї подальшої обробки цих результатів програмою.
+ У програмі реалізований 
+\series bold
+Алгоритм пошуку А*
+\series default
+.
+ Також у нашій програмі використовувались черги з пріоритетом
+\end_layout
+
+\end_body
+\end_document
